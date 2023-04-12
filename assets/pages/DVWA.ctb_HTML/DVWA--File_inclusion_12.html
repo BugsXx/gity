@@ -1,0 +1,12 @@
+<!doctype html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>File inclusion</title>
+  <meta name="generator" content="CherryTree">
+  <link rel="stylesheet" href="res/styles4.css" type="text/css" />
+</head>
+<body>
+<div class='page'><h1 class='title'>File inclusion</h1><br/><p>Lo primero que tenemos en cuenta es que al entrar aparecen 3 archivos</p><p><img src="images/12-1.png" alt="images/12-1.png" /></p><p></p><p>al ir alternando entre ellos notamos que el URL de la pagina va cambiando</p><p></p><p><img src="images/12-2.png" alt="images/12-2.png" /></p><p></p><p>pagina2</p><p><img src="images/12-3.png" alt="images/12-3.png" /></p><p></p><p>pagina 3</p><p><img src="images/12-4.png" alt="images/12-4.png" /></p><p></p><p>por lo que entendemos que estamos en un directorio navegando entre archivos y podemos manipularlos desde el URL, probamos con lo siguiente:</p><p></p><p></p><p><img src="images/12-5.png" alt="images/12-5.png" /></p><p>intentado iterar sobre la cantidad de archivos encontramos uno oculto :)</p><p></p><p>Al ver el SOURCE de la pagina nos damos cuenta que esta programada para hacer un pedido GET a la pagina que estemos buscando</p><p><img src="images/12-6.png" alt="images/12-6.png" /></p><p></p><p>ahora intentaremos subir un archivo desde nuestro python3 server el cual nos de una reverse shell, para eso buscamos en google una simple php shell y de resultado tenemos lo siguiente:</p><p></p><p><div class="codebox"><pre>&lt;?php<br />    if(isset($_GET[&#39;cmd&#39;]))<br />    {<br />        system($_GET[&#39;cmd&#39;]);<br />    }<br />?&gt;</pre></div></p><p></p><p>lo guardamos en un archivo y abrimos nuestro python server</p><p></p><p><img src="images/12-7.png" alt="images/12-7.png" /></p><p>luego vamos al URL de la pagina vulnerable y escribimos lo siguiente para poder descargar el archivo</p><p></p><p><img src="images/12-8.png" alt="images/12-8.png" /></p><p></p><p></p><p>al realizar esto notamos que no pasa nada, la pagina queda en blanco por lo que intente muchas otras webshell y ninguna funciono, tambien subi manualmente el archivo a /var/www/html/DVWA/vulnerabilities/fi/</p><p><img src="images/12-9.png" alt="images/12-9.png" /></p><p></p><p>pero tampoco funciona, esta buggeado. (igualmente cuando lo hicimos juntos funciono asi que no me preocupo por que se que se hace de esta manera)</p><p></p><p></p></div>
+</body>
+</html>

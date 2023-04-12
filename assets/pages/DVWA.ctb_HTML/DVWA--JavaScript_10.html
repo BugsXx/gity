@@ -1,0 +1,12 @@
+<!doctype html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>JavaScript</title>
+  <meta name="generator" content="CherryTree">
+  <link rel="stylesheet" href="res/styles4.css" type="text/css" />
+</head>
+<body>
+<div class='page'><h1 class='title'>JavaScript</h1><br/><p>en esta pagina el objetivo es averiguar como poner la palabra succes y que este funcione, primero vemos el source.</p><p></p><p></p><p>al ver el source vemos como la unica funcion que es llamada es:</p><p></p><p><span style="color:#dd0000;"> function generate_token() {</span></p><p><span style="color:#dd0000;">        var phrase = document.getElementById(&quot;phrase&quot;).value;</span></p><p><span style="color:#dd0000;">        document.getElementById(&quot;token&quot;).value = md5(rot13(phrase));</span></p><p><span style="color:#dd0000;">    }</span></p><p></p><p>donde la frase que nosotros ponemos es encriptada en rot13 y luego en md5</p><p></p><p>por lo que tambien podemos ver como se genera un toquen de esa frase(la doble encriptacion)</p><p></p><p>por lo que buscamos donde este se muestra desde el inspeccionar y encontramos que este esta HIDDEN por lo que lo manipulamos para mostrarlo y poder cambiarlo.</p><p></p><p><img src="images/10-1.png" alt="images/10-1.png" /></p><p></p><p><img src="images/10-2.png" alt="images/10-2.png" /></p><p></p><p>luego entramos a cyberchef para encriptar dos veces la palabra success y quedaria asi:</p><p><img src="images/10-3.png" alt="images/10-3.png" /></p><p></p><p>38581812b435834ebf84ebcc2c6424d6</p><p></p><p><img src="images/10-4.png" alt="images/10-4.png" /></p><p></p><p>y listo!!!</p></div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<!doctype html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Week Session ID</title>
+  <meta name="generator" content="CherryTree">
+  <link rel="stylesheet" href="res/styles4.css" type="text/css" />
+</head>
+<body>
+<div class='page'><h1 class='title'>Week Session ID</h1><br/><p>en esta pagina nuestro objetivo es entender el patron que se genera en la variable dvwaSession ya que es el variable de las cookies</p><p></p><p>LOW: al ir iterando dentro de la pagina y ver el source de este es muy facil ver como la iteracion aumenta de a 1</p><p><img src="images/6-1.png" alt="images/6-1.png" /></p><p>refresh:</p><p><img src="images/6-2.png" alt="images/6-2.png" /></p><p></p><p>second refresh:</p><p><img src="images/6-3.png" alt="images/6-3.png" /></p><p></p><p>MID: Al primer instante dentro del source de la pagina se ve como la variable tiene dentro time() la cual muestra los segundos actuales del dia</p><p><img src="images/6-4.png" alt="images/6-4.png" /></p><p></p><p>al ir probando muestra un numero alto, el cual al esprar una determinado cantidad de segundos y hacer F5 este aumenta esa cantidad de segundos, lo cual afirma que la variable de las cookies es el segundo del dia en el cual fue ejecutado</p><p>primer refresh:</p><p><img src="images/6-5.png" alt="images/6-5.png" /></p><p></p><p>16:55:02 to seconds is 1676652902 </p><p></p><p></p><p>HARD: SOURCE:</p><p><img src="images/6-6.png" alt="images/6-6.png" /></p><p>al ver el source lo primero que notamos es que la variable cookie_value depende directamente de la variable sessions, la cual aumenta de a uno por cada refresh de pagina, luego este se codifica en md5  y tambien se le asigna otro valor el cual es los segundos del dia + 3600, por lo que podemos ver que el md5 es simplemente las iteraciones del refresh.</p><p></p><p><img src="images/6-7.png" alt="images/6-7.png" /></p></div>
+</body>
+</html>

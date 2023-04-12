@@ -1,0 +1,12 @@
+<!doctype html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>comand injection</title>
+  <meta name="generator" content="CherryTree">
+  <link rel="stylesheet" href="res/styles4.css" type="text/css" />
+</head>
+<body>
+<div class='page'><h1 class='title'>comand injection</h1><br/><p>primero vemos que nos pide una ip por lo cual probamos para ver cual sera el output de esa pagina, luego de ver el output se puede notar a simple vista que es un ping hacia la ip dada, entonces probamos agregando un ; luego y aplicamos un ls</p><p></p><p><img src="images/11-1.png" alt="images/11-1.png" /></p><p></p><p>then i did a whoami to check</p><p></p><p><img src="images/11-2.png" alt="images/11-2.png" /></p><p></p><p>after that i try to open a server with my attacker machine on python listening in the port 9090</p><p></p><p><img src="images/11-3.png" alt="images/11-3.png" /></p><p></p><p>finally i connect the vulnerable machine on my python server</p><p></p><p><img src="images/11-4.png" alt="images/11-4.png" /> </p><p></p><p>and that results in the shell!, the last step its spawn a more beauty shell and do the final check</p><p></p><p><img src="images/11-5.png" alt="images/11-5.png" /></p><p></p><p><img src="images/11-6.png" alt="images/11-6.png" /></p><p></p><p>got it!</p><p></p><p></p></div>
+</body>
+</html>
