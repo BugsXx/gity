@@ -69,6 +69,11 @@ div.tree-panel {
     /*margin: 0.75em 0 0.75em 20px;*/
 }
 
+.hero-info-buttons {
+    width: 45px;
+
+}
+
 div.page-panel {
     flex: 80vw;
     margin: 0;
@@ -99,7 +104,7 @@ div.page {
 
 div.tree {
     font-size: 12px;
-    color: #666666;
+    color: #000000;
 }
 
 /* fix for firefox */
@@ -107,8 +112,9 @@ div.tree button {
     border-width: 2px;
 }
 
-div.tree a, div.tree a:visited {
-    color: #666666;
+div.tree a,
+div.tree a:visited {
+    color: #000000;
     text-decoration: none;
 }
 
@@ -125,10 +131,12 @@ div.tree ul.outermost {
 div.tree li {
     padding-inline-start: 0;
 }
+
 div.tree li.leaf {
     padding-inline-start: 10px;
     line-height: 2;
 }
+
 .tree li a {
     width: 100%;
     display: inline-block;
@@ -138,11 +146,15 @@ div.tree li.leaf {
     background: rgba(193, 193, 193, 0.7);
     color: white;
 }
+
 .tree li {
     white-space: nowrap;
 }
 
-div.tree a.show, div.tree a.hide { display: none; }
+div.tree a.show,
+div.tree a.hide {
+    display: none;
+}
 
 .hide {
     display: none;
@@ -163,7 +175,8 @@ th {
     background-color: rgb(193, 193, 193);
 }
 
-td, th {
+td,
+th {
     padding-left: 5px;
     padding-right: 5px;
     border: 1px solid #202A2C;
@@ -219,7 +232,8 @@ span.code-node {
     /*color: #FFFF00;  /* yellow */
 }
 
-div.page code, div.page pre {
+div.page code,
+div.page pre {
     font-family: "Courier New", Courier, monospace;
     font-weight: normal;
     font-size: 13px;
@@ -253,4 +267,3 @@ div.page pre {
     margin-top: 0.5em;
     margin-bottom: 0.5em;
 }*/
-

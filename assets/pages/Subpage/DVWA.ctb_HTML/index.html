@@ -6,6 +6,7 @@
   <title>DVWA.ctb</title>
   <meta name="generator" content="CherryTree">
   <link rel="stylesheet" href="res/styles4.css" type="text/css" />
+  <link rel="stylesheet" href="/styles.css">
 </head>
 
 <body>
@@ -17,7 +18,9 @@
           <button onclick='expandAllSubtrees()'>Expand All</button> <button onclick='collapseAllSubtrees()'>Collapse
             All</button>
         </p>
+
         <ul class='outermost'>
+          <li class="hero-info-buttons"><a href="/assets/pages/pase.html">Back</a></li>
           <li><button onclick='toggleSubTree(this)'>-</button> <a href='#' onclick="changeFrame('DVWA_1.html')">DVWA</a>
           </li>
           <ul class='subtree'>
@@ -36,7 +39,7 @@
             <li class='leaf'><a href='#' onclick="changeFrame('DVWA--XSS_(Reflect)_8.html')">XSS (Reflect)</a></li>
             <li class='leaf'><a href='#' onclick="changeFrame('DVWA--XSS_(stored)_9.html')">XSS (stored)</a></li>
             <li class='leaf'><a href='#' onclick="changeFrame('DVWA--JavaScript_10.html')">JavaScript</a></li>
-            <li class="leaf"><a href="/assets/pages/pase.html">back</a></li>
+
           </ul>
         </ul>
       </div>

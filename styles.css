@@ -21,7 +21,7 @@ header {
     padding: 0px 40px;
     position: fixed;
     top: 0;
-    gap: 500px;
+    gap: 20px;
 }
 
 .logo {
@@ -175,6 +175,10 @@ footer {
 
 .footer-navbar li {
     cursor: pointer;
+}
+
+.footer-navbar li a {
+    color: white;
 }
 
 .footer-bot img {
