@@ -1,0 +1,12 @@
+<!doctype html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>a little VM from HTB lab</title>
+  <meta name="generator" content="CherryTree">
+  <link rel="stylesheet" href="res/styles4.css" type="text/css" />
+</head>
+<body>
+<div class='page'><h1 class='title'>a little VM from HTB lab</h1><br/><p>ip: 10.10.10.7</p><p></p><p>nmap 10.10.10.7 -sV -sC -Pn -vv</p><p></p><p>then i search on the <a href="https://10.10.10.7/">https://10.10.10.7/</a> and there give me an login and i searchsploit for this login but nothing works so i try with:</p><p></p><p>port 10000 have miniserv service, popular service who give me a login, i searchsploit that and nothing works, we found on internet a ‘user-agent’ value to use in burp, listening on port 4444 if i send it on repeater it will give me a shell with the user who owns the service, in this case root.</p><p></p><p>root: f77f23fc112349a0a2dedbf7ef4a1973</p></div>
+</body>
+</html>
