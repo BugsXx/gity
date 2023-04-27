@@ -1,0 +1,12 @@
+<!doctype html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>MIRAI</title>
+  <meta name="generator" content="CherryTree">
+  <link rel="stylesheet" href="res/styles4.css" type="text/css" />
+</head>
+<body>
+<div class='page'><h1 class='title'>MIRAI</h1><br/><p>IP:10.10.10.48</p><p></p><p>PORT   STATE SERVICE REASON</p><p>22/tcp open  ssh     syn-ack ttl 63</p><p>53/tcp open  domain  syn-ack ttl 63</p><p>80/tcp open  http    syn-ack ttl 63</p><p></p><p>53/tcp open  domain  syn-ack ttl 63 dnsmasq 2.76</p><p>| dns-nsid:</p><p>|_  bind.version: dnsmasq-2.76</p><p></p><p>in <a href="http://10.10.10.48/admin">http://10.10.10.48/admin</a> is located pi-hole, who is the web used on raspberry, so i will try to check the default credentials to enter on the machine</p><p></p><p></p><p>ssh 10.10.10.48 -l pi</p><p></p><p>password: raspberry</p><p></p><p>succesfull.</p><p></p><p>lost+found directorty is the directory where linux put the files who doesnt know how to recovered it</p><p></p><p>found the name if the device, with df command</p><p></p><p></p><p><img src="images/5-1.png" alt="images/5-1.png" /></p><p></p><p>then i search how to take an image of the usb for get the text disk on my kali machine,</p><p></p><p>i will take the image with this command:</p><p></p><p>dd if=&#39;name of the device&#39; of=&#39;path of were copy the image&#39; bs=4M</p><p></p><p>when i have the image i will copy it on my kali, then i will run the command testdisk</p><p></p><p>when i run the command i get the graphical enviroment of the tool, i will select intel particion, it will not work so i will try with another tool</p><p></p><p>‘strings’ is a tool who print all printable strings on the file who we give to the tool</p><p></p><p><img src="images/5-2.png" alt="images/5-2.png" /></p><p></p><p>root.txt: 3d3e483143ff12ec505d026fa13e020b</p></div>
+</body>
+</html>
